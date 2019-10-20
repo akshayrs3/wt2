@@ -4,37 +4,42 @@
 
 <!-- Bootstrap CDN -->
 {% block head %}
+<title>Home</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<head>
-	<link rel="stylesheet" href="{% static 'main_app/index.css' %}">
-
+<link rel="stylesheet" href="{% static 'main_app/index.css' %}">
 {% endblock %}
 
+
 {% block body %}
+  <p>ilbfkldfkldsbflkbglksdbglkbdgfbdfkljgjk</p>
   <div class="container">
     <div class="row">
       <div class="span4"></div>
       <div class="span4"><img class="center-block" src="{% static 'main_app/images/mainLogo.jpeg' %}" width="270" height="95" alt="Google" id="logo"></div>
       <div class="span4"></div>
     </div>
-
-    <div class="row">
-      <div class="col-xs-6">
-        <div class="input-group">
-          <input type="text" class="form-control">
-          		<span class="input-group-btn">
-                  <button class="btn btn-primary" type="button"><i class="fa fa-microphone"></i></button>
-                </span>
+    <form action="{% url 'main_app:SearchPage' %}" method="POST" value=""> {% csrf_token %}
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="input-group">
+            <input type="text" class="form-control" name="search_bar">
+            		<span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><i class="fa fa-microphone"></i></button>
+                  </span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="btn-group-wrap">
-      <div class="btn-group">
-        <button type="button" class="btn btn-primary" id="google-search">Hotel Search</button>
+      <div class="btn-group-wrap">
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary" id="google-search">
+            Hotel Search
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
+  </div>
 
 {% endblock %}
