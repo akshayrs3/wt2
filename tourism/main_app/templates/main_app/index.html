@@ -1,45 +1,32 @@
-{% extends 'main_app/base.html' %}
-{% load static %}
 
-
-<!-- Bootstrap CDN -->
-{% block head %}
 <title>Home</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="{% static 'main_app/index.css' %}">
-{% endblock %}
-
-
 {% block body %}
-  <p>ilbfkldfkldsbflkbglksdbglkbdgfbdfkljgjk</p>
-  <div class="container">
-    <div class="row">
-      <div class="span4"></div>
-      <div class="span4"><img class="center-block" src="{% static 'main_app/images/mainLogo.jpeg' %}" width="270" height="95" alt="Google" id="logo"></div>
-      <div class="span4"></div>
-    </div>
-    <form action="{% url 'main_app:SearchPage' %}" method="POST" value=""> {% csrf_token %}
-      <div class="row">
-        <div class="col-xs-6">
-          <div class="input-group">
-            <input type="text" class="form-control" name="search_bar">
-            		<span class="input-group-btn">
-                    <button class="btn btn-primary" type="button"><i class="fa fa-microphone"></i></button>
-                  </span>
-          </div>
-        </div>
-      </div>
-      <div class="btn-group-wrap">
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary" id="google-search">
-            Hotel Search
-          </button>
-        </div>
-      </div>
+  <div class="form-div">
+    <form action="{% url 'main_app:SearchPage' %}" method='POST' 
+          id='search-form'> {% csrf_token %}
+      <fieldset>
+        <p>Check In date <input type="date" name="check-in-date"></p>
+        <p>Check Out date <input type="date" name="check-out-date"></p>
+        <p>Guests
+          <select id="guests" name = "guests"> 
+            <option value = "1"> 1 </option>
+            <option value = "2"> 2 </option>
+            <option value = "3"> 3 </option>
+            <option value = "4"> 4 </option>
+          </select>
+        </p>
+        <p> City <input type="text" name="city"> </p>
+        <input type="submit" name="search-submit" value="Search Hotels">
+      </fieldset>
     </form>
+    <fieldset>
+    <form id="login-form" method="POST"> {% csrf_token %}
+      Already a member?
+      <p>Username <input type="text" name="username"></p>
+      <p>Password <input type="password" name="password"></p>
+      <p><input type="submit" name="login-submit" value = "Login"> </p>
+    </form>
+    </fieldset>
   </div>
 
 {% endblock %}
