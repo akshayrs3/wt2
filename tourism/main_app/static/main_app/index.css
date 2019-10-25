@@ -54,3 +54,12 @@ div.btn-group {
   background-color: black !important;
   border-color: #2980b9 !important;
 }
+
+.hotels-div{
+  margin-top: 70px;
+}
+.hotels-row{
+  margin-left: auto;
+  background-color: black;
+  color: white;
+}

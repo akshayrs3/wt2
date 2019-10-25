@@ -8,11 +8,32 @@ from django.views import generic
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-# Create your views here.
+from rest_framework.views import APIView
+from rest_framework.renderers import TemplateHTMLRenderer
+	
+from .models import User, Hotel
 
+
+
+# Create your views here.
 class Index(TemplateView):
     template_name = 'main_app/index.html'
 
 class SearchPage(TemplateView):
 	template_name = 'main_app/search_page.html'
+
+	def post(self, request):
+		city = request.POST.get("city", " ")
+		check_in = request.POST.get("check-in-date", " ")
+		check_out = request.POST.get("check-out-date", " ")
+		hotels = list(Hotel.objects.all())
+		results = []
+		for hotel in hotels:
+			hotel = str(hotel)
+			if city.lower() in hotel.lower():
+				results.append(hotel)
+		return render(request, self.template_name, {'results':results})
+	
+
+
 
