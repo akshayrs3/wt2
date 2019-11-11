@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.Index.as_view(), name = 'Index'),
     path('search_page', views.SearchPage.as_view(), name='SearchPage'),
     path('login_page', views.LoginPage.as_view(), name='LoginPage'),
+    path('get_cities', views.GetCities.as_view(), name = 'GetCities'),
 ]
