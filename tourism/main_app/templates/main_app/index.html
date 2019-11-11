@@ -1,32 +1,62 @@
+{% extends 'main_app/base.html' %}
 
-<title>Home</title>
 {% block body %}
-  <div class="form-div">
-    <form action="{% url 'main_app:SearchPage' %}" method='POST' 
-          id='search-form'> {% csrf_token %}
-      <fieldset>
-        <p>Check In date <input type="date" name="check-in-date"></p>
-        <p>Check Out date <input type="date" name="check-out-date"></p>
-        <p>Guests
-          <select id="guests" name = "guests"> 
-            <option value = "1"> 1 </option>
-            <option value = "2"> 2 </option>
-            <option value = "3"> 3 </option>
-            <option value = "4"> 4 </option>
-          </select>
-        </p>
-        <p> City <input type="text" name="city"> </p>
-        <input type="submit" name="search-submit" value="Search Hotels">
-      </fieldset>
-    </form>
-    <fieldset>
-    <form id="login-form" method="POST"> {% csrf_token %}
-      Already a member?
-      <p>Username <input type="text" name="username"></p>
-      <p>Password <input type="password" name="password"></p>
-      <p><input type="submit" name="login-submit" value = "Login"> </p>
-    </form>
-    </fieldset>
-  </div>
+  <div class="container-fluid">
+    <div class="row">
 
+      <div class="col-sm-12 col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <h3>Search for your perfect vacation :D</h3>
+
+            <form class="form-horizontal" action="{% url 'main_app:SearchPage' %}" 
+            method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              
+              <div class="form-group">
+                <label class="control-label col-sm-3">Check In Date</label>
+                <input col-sm-offset-2 type="date" name="check-in-date">
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-3">Check Out Date</label>
+                <input type="date" name="check-out-date">
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-3">Guests</label>
+                <select id="guests" name = "guests"> 
+                  <option value = "1"> 1 </option>
+                  <option value = "2"> 2 </option>
+                  <option value = "3"> 3 </option>
+                  <option value = "4"> 4 </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-3">City</label>
+                <input type="text" name="city">
+              </div>
+
+
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-10">
+                  <button type="submit" class="btn btn-success" name="search-submit">
+                  Search Hotels</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 {% endblock %}
+
+
+
+    
+
