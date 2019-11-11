@@ -10,7 +10,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
-
+	
 from .models import User, Hotel
 
 
@@ -23,19 +23,20 @@ class SearchPage(TemplateView):
 	template_name = 'main_app/search_page.html'
 
 	def post(self, request):
-		data = request.POST.get("search_bar", "")
+		city = request.POST.get("city", " ")
+		#check_in = request.POST.get("check-in-date", " ")
+		#check_out = request.POST.get("check-out-date", " ")
+		hotels = list(Hotel.objects.all())
+		results = []
+		for hotel in hotels:
+			hotel = str(hotel)
+			if city.lower() in hotel.lower():
+				results.append(hotel)
+		return render(request, self.template_name, {'results':results})
 
-		list_of_hotels = list(Hotel.objects.all())
-
-		return render(request, self.template_name, {'list_of_hotels':list_of_hotels})
+class LoginPage(TemplateView):
+	template_name = 'main_app/login_page.html'
 	
 
-
-
-
-
-class SearchPageAPI(APIView):
-	def get(self, request):
-		pass
 
 

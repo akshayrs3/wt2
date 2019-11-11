@@ -12,11 +12,16 @@
 
 
 {% block body %}
-<div class="center-block">
-	{% if list_of_hotels|length > 0 %}
-		{% for i in list_of_hotels %}
-			<p> {{ i }} </p>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			
+		</div>
+		{% if results|length > 0 %}
+		{% for hotel in results %}
+			<p class = "hotels-row"> {{ hotel }} </p>
 		{% endfor %}
 	{% endif %}
+	</div>
 </div>
 {% endblock %}

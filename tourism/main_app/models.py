@@ -18,9 +18,12 @@ class Hotel(models.Model):
 	city = models.CharField(max_length = 50)
 	country = models.CharField(max_length = 50)
 	address = models.CharField(max_length = 100)
+	startPrice = models.FloatField(default = 0.0)
+	endPrice = models.FloatField(default = 0.0)
 
 	def __str__(self):
-		return self.name + " " +self.city + " " + self.country
+		return (self.name + " " +self.city + " " + self.country + " " 
+		+ self.address)
 
 
 
