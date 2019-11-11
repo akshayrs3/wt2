@@ -24,8 +24,8 @@ class SearchPage(TemplateView):
 
 	def post(self, request):
 		city = request.POST.get("city", " ")
-		check_in = request.POST.get("check-in-date", " ")
-		check_out = request.POST.get("check-out-date", " ")
+		#check_in = request.POST.get("check-in-date", " ")
+		#check_out = request.POST.get("check-out-date", " ")
 		hotels = list(Hotel.objects.all())
 		results = []
 		for hotel in hotels:
@@ -33,6 +33,9 @@ class SearchPage(TemplateView):
 			if city.lower() in hotel.lower():
 				results.append(hotel)
 		return render(request, self.template_name, {'results':results})
+
+class LoginPage(TemplateView):
+	template_name = 'main_app/login_page.html'
 	
 
 

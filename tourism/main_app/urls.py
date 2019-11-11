@@ -5,5 +5,6 @@ app_name = 'main_app'
 
 urlpatterns = [
     path('', views.Index.as_view(), name = 'Index'),
-    path('search_page', views.SearchPage.as_view(), name = 'SearchPage')
+    path('search_page', views.SearchPage.as_view(), name='SearchPage'),
+    path('login_page', views.LoginPage.as_view(), name='LoginPage'),
 ]
