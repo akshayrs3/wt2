@@ -1,5 +1,44 @@
 {% extends 'main_app/base.html' %}
 
+{% block head %}
+  <script type="text/javascript">
+    timer = null
+    search = null
+    url = null
+    function get_data(){
+        table = document.getElementById("container")
+        table.innerHTML = "";
+        search=document.getElementById("city").value;
+        console.log(search)
+
+        if(timer){
+          clearTimeout(timer);
+        }
+        timer=setTimeout(send_data,1000)
+    }
+    function send_data(){
+      xhr = new XMLHttpRequest()
+      url="http://localhost:8000/get_cities?city="+search;
+      xhr.onreadystatechange=show_result;
+      xhr.open("GET",url,true);
+      xhr.send();
+    }
+    function show_result(){
+      if(this.readyState == 4 && this.status == 200){
+        cities = JSON.parse(this.response)
+        console.log(typeof(cities))
+        table = document.getElementById("container");
+        for(city of cities){
+          var new_div = document.createElement("div");
+          new_div.innerHTML = city;
+          table.appendChild(new_div);
+        }
+        table.style.display = "block";
+      }
+    }
+
+  </script>
+{% endblock %}
 {% block body %}
   <div class="container-fluid">
     <div class="row">
@@ -36,7 +75,25 @@
 
               <div class="form-group">
                 <label class="control-label col-sm-3">City</label>
-                <input type="text" name="city">
+                <table border="0" cellpadding="0">
+                  <tr>
+                    <td>
+                      <!-- dont remove -->
+                    </td>
+                    <td>
+                      <input type="text" name="city" id = "city" onkeyup="get_data()">
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      
+                    </td>
+                    <td>
+                      <div id="container"></div>
+                    </td>  
+                  </tr>
+                </table>
               </div>
 
 
