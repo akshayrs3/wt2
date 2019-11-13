@@ -45,6 +45,7 @@ class SearchPage(TemplateView):
 		city = request.POST.get("city", " ")
 		#check_in = request.POST.get("check-in-date", " ")
 		#check_out = request.POST.get("check-out-date", " ")
+		print("\n\n\n\n", city)
 		hotels = list(Hotel.objects.all())
 		results = []
 		for hotel in hotels:
