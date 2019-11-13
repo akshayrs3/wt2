@@ -21,7 +21,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Namee</th>
+                                <th>Image</th>
+                                <th>Name</th>
                                 <th>City</th>
                                 <th>Address</th>
                                 <th>Rooms</th>
@@ -30,18 +31,16 @@
                         <tbody>
                             {% for hotel in results %}
                                 <tr>
-                                    <td>{{ hotel }}</td>
-                                    <td>{{ song.album.artist }}</td>
+                                    <td>
+                                        <img src="{% static 'main_app/images/' %}{{ hotel.image }}"
+                                             height="150" width="250">
+                                    </td>
+                                    {% csrf_token %}
+                                    <td>{{ hotel.name }}</td>
+                                    <td>{{ hotel.city }}</td>
+                                    <td>{{ hotel.address }}</td>
+                                    <td> <!-- rooms --> </td>
                                     
-                                    <td>
-                                        <a href="">
-                                            <!-- display image -->
-                                        </a>
-                                        <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a>
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
-                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -59,21 +58,3 @@
 
 
 
-<!-- 
-{% block body %}
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-12">
-			
-		</div>
-	{% if results|length > 0 %}
-		{% for hotel in results %}
-			<p> {{ hotel }} </p>
-		{% endfor %}
-	{% else %}
-		<h2>No results found</h2>
-	{% endif %}
-	</div>
-</div>
-{% endblock %}
- -->
