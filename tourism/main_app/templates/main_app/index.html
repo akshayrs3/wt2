@@ -5,11 +5,15 @@
     timer = null
     search = null
     url = null
+    table = null
     function get_data(){
         table = document.getElementById("container")
         table.innerHTML = "";
         search=document.getElementById("city").value;
-        console.log(search)
+
+        if(search.length == 0){
+          table.innerHTML = "";
+        }
 
         if(timer){
           clearTimeout(timer);
@@ -26,15 +30,21 @@
     function show_result(){
       if(this.readyState == 4 && this.status == 200){
         cities = JSON.parse(this.response)
-        console.log(typeof(cities))
-        table = document.getElementById("container");
+        //table = document.getElementById("container");
         for(city of cities){
           var new_div = document.createElement("div");
           new_div.innerHTML = city;
+          new_div.onclick = fill_field;
           table.appendChild(new_div);
         }
         table.style.display = "block";
       }
+    }
+
+    function fill_field(e){
+      search = document.getElementById("city");
+      search.value = e.target.innerHTML;
+      table.innerHTML = "";
     }
 
   </script>

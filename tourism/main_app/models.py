@@ -20,6 +20,7 @@ class Hotel(models.Model):
 	address = models.CharField(max_length = 100)
 	startPrice = models.FloatField(default = 0.0)
 	endPrice = models.FloatField(default = 0.0)
+	image = models.ImageField(null=True, blank=True)
 
 	def __str__(self):
 		return (self.name + " " +self.city + " " + self.country + " " 
