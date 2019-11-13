@@ -21,6 +21,7 @@ class Index(TemplateView):
 
 
 class GetCities(APIView):
+	# submission throttling
 	def get(self, request):
 		search = request.GET.get("city", " ")
 		print("\n\n\n\n\n", search)
@@ -45,13 +46,20 @@ class SearchPage(TemplateView):
 		city = request.POST.get("city", " ")
 		#check_in = request.POST.get("check-in-date", " ")
 		#check_out = request.POST.get("check-out-date", " ")
-		print("\n\n\n\n", city)
-		hotels = list(Hotel.objects.all())
+		hotels = Hotel.objects.all()
+
+		
+		hotels_dict = []
+		for hotel in Hotel.objects.values():
+			hotels_dict.append(hotel)
+
 		results = []
-		for hotel in hotels:
-			hotel = str(hotel)
-			if city.lower() in hotel.lower():
-				results.append(hotel)
+		for i, hotel in enumerate(hotels.iterator()): 
+			if city.lower() in hotel.city.lower():
+				results.append(hotels_dict[i])
+
+		print(results)
+
 		return render(request, self.template_name, {'results':results})
 
 
