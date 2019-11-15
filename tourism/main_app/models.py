@@ -2,8 +2,16 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
+class Session(models.Model):
+	check_in = models.DateField(default=datetime.now())
+	check_out = models.DateField(default=datetime.now())
+
+	def __str__(self):
+		return (str(self.pk))
+
 class User(models.Model):
 	name = models.CharField(max_length = 50)
 	age = models.IntegerField(default = 0)
