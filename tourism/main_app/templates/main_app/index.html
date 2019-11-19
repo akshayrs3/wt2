@@ -1,6 +1,16 @@
 {% extends 'main_app/base.html' %}
+{% load static %}
 
 {% block head %}
+  <style>
+    body {
+      background-image: url({% static 'main_app/images/hotel_bg.jpg' %});
+      background-size: cover;
+    }
+    .container-fluid{
+      opacity: 0.85;
+    }
+  </style>
   <script type="text/javascript">
     timer = null
     search = null
@@ -49,32 +59,33 @@
 
   </script>
 {% endblock %}
+
 {% block body %}
   <div class="container-fluid">
-    <div class="row">
+    <div style="width: 30%; margin-left: 36%;" >
 
-      <div class="col-sm-12 col-md-7">
+      <div>
         <div class="panel panel-default">
-          <div class="panel-body">
+          <div class="panel-body" >
 
-            <h3>Search for your perfect vacation :D</h3>
+            <center><h3>Search for your perfect vacation</h3></center><br />
 
             <form class="form-horizontal" action="{% url 'main_app:SearchPage' %}" 
             method="post" enctype="multipart/form-data">
               {% csrf_token %}
               
               <div class="form-group">
-                <label class="control-label col-sm-3">Check In Date</label>
+                <label class="control-label col-sm-5">Check In Date</label>
                 <input col-sm-offset-2 type="date" name="check-in-date">
               </div>
 
               <div class="form-group">
-                <label class="control-label col-sm-3">Check Out Date</label>
+                <label class="control-label col-sm-5">Check Out Date</label>
                 <input type="date" name="check-out-date">
               </div>
 
               <div class="form-group">
-                <label class="control-label col-sm-3">Guests</label>
+                <label class="control-label col-sm-5">Guests</label>
                 <select id="guests" name = "guests"> 
                   <option value = "1"> 1 </option>
                   <option value = "2"> 2 </option>
@@ -84,7 +95,7 @@
               </div>
 
               <div class="form-group">
-                <label class="control-label col-sm-3">City</label>
+                <label class="control-label col-sm-5">City</label>
                 <table border="0" cellpadding="0">
                   <tr>
                     <td>
@@ -108,7 +119,7 @@
 
 
               <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-10">
+                <div class="col-sm-offset-4 col-sm-10">
                   <button type="submit" class="btn btn-success" name="search-submit">
                   Search Hotels</button>
                 </div>

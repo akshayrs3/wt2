@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block head %}
+
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Choose Hotels</title>
@@ -17,10 +19,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
   <script>
-	$(function () {
-	  $("#check-in").datetimepicker();
-	  $("#check-out").datetimepicker();
-	});
+	function getPrice(){
+		if(document.getElementById("room-type").value == "suite"){
+			result = document.getElementById("suite").innerHTML;
+		} 
+		else{
+			result = document.getElementById("deluxe").innerHTML;	
+		}
+		document.getElementById("result").innerHTML = "Rs. " + result;
+	}
   </script>
 
 {% endblock %}
@@ -42,18 +49,80 @@
 
 		  	<div class="col-sm-3">
 		      <h2>Check In Date</h2>
-		      <input id="check-in" type="text" value="{{ request.session.check_in }}">
+		      <input id="check-in" name="check-in" type="date" value="{{ request.session.check_in }}">
 		    </div>
 
 		    <div class="col-sm-3">
 		      <h2>Check Out Date</h2>
-		      <input id="check-out" type="text" value="{{ request.session.check_out }}">
+		      <input id="check-out" name="check-out" type="date" value="{{ request.session.check_out }}">
+		    </div>
+
+		    <div class="col-sm-3">
+			  	  <h2>Room Type</h2>
+			  	  <div id="suite" style="display:None">{{ hotel.endPrice }}</div>
+			  	  <div id="deluxe" style="display:None">{{ hotel.startPrice }}</div>	
+
+	              <select onclick="getPrice()" id="room-type" name = "room-type"> 
+	                  <option value = "suite"> Suite </option>
+	                  <option value = "deluxe"> Deluxe </option>
+	              </select>
+	        </div>
+
+	        <div class="col-sm-3">
+		      <h2>Price</h2>
+		      <span id="result"></span>
 		    </div>
 		  </div>
 
 		  <div class="row">
-		      <input id="check-out" type="submit" value="Book Hotel" style="margin-top:20%; margin-left:45%">
+		  		<div class="col-sm-3"></div>
+		  		<div class="col-sm-3"></div>
+		  		
+		  </div>
+
+		  <div class="row">
+		  	  <div class="col-sm-12">
+			      <h2>Reviews Sentiment</h2>
+		      </div>
+		  </div>
+
+		  <div class="row">
+		  	  <div class="col-sm-2">
+		      	  <h4>Postive</h4>
+		      	  <h4>{{ review_scores.pos }}%</h4>
+		      </div>
+
+		      <div class="col-sm-2">
+		      	  <h4>Neutral</h4>
+		      	  <h4>{{ review_scores.neu }}%</h4>
+		      </div>
+
+		      <div class="col-sm-2">
+		      	  <h4>Negative</h4>
+		      	  <h4>{{ review_scores.neg }}%</h4>
+		      </div>
+		  </div>
+
+		  <div class="row">
+		  	  <div class="col-sm-12">
+			      <h2>Customer Reviews</h2>
+		      </div>
+		  </div>
+
+		  <div style="height: 200px; width: 50%; overflow-y: scroll;">
+			  {% for review in reviews %}
+				  <div class="row">
+				  	  <div class="col-sm-12" style="font-weight:500; font-family: verdana;">
+					      {{ review }}
+				      </div>
+				  </div> <br />
+			  {% endfor %}
+		  </div>
+
+		  <div class="row">
+		  	 <input id="check-out" type="submit" value="Book Hotel" style="margin-top:10%; margin-left:45%">
 		  </div>
 	</form>
 	</div>
+
 {% endblock %}
