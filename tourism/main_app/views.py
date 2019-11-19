@@ -41,6 +41,13 @@ class GetCities(APIView):
 class SelectionPage(TemplateView):
 	template_name = 'main_app/selection_page.html'
 
+	def get(self, request):
+		session_object = Session.objects.get(pk = 1)
+		check_in = session_object.check_in
+		check_out = session_object.check_out
+		print("\n\n\n\n\n\n\n\n\n", check_in, check_out)
+		return render(request, self.template_name, {'check_in': check_in,
+		 'check_out': check_out})
 
 class SearchPage(TemplateView):
 	template_name = 'main_app/search_page.html'
