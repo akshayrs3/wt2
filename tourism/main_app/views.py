@@ -71,7 +71,8 @@ class PaymentPage(TemplateView):
 
 	#after submit
 	def post(self, request):
-		form = PaymentPage(data=request.POST)
+		print()
+		form = self.form_class(data=request.POST)
 
 		return render(request, self.template_name, {'form':form})
 
