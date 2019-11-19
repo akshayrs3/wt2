@@ -26,5 +26,7 @@ class PaymentPage(forms.Form):
 
 	hotel_name = forms.CharField(label="Hotel Name", max_length=100)
 
+	email = forms.CharField(label="Email ID", max_length=100)
+
 	class Meta:
 		fields = ['first_name', 'last_name', 'age']

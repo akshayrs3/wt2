@@ -1,0 +1,40 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+          <h2>Thank You for using Trivago. Your hotel room has been reserved.</h2>
+        </div>
+          
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-5">
+              <h2>Details</h3>
+              <h3>Name: {{ results.name }}</h3>
+              <h3>Email: {{ results.email }}</h3>
+              <h3>Hotel: {{ results.hotel_name }}</h3>
+              <h3>Guests: {{ results.guests }}</h3>
+              <h3>Check-in Date: {{ results.check_in }}</h3>
+              <h3>Check-out Date: {{ results.check_out }}</h3>
+              <h3>Class: {{ results.room_type }}</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12" style="margin-top: 15%"></div>
+            <div class="col-sm-12" style="margin-left: 90%">
+                <form>
+                    <input type=button value="Print Ticket" onClick="javascript:window.print()">
+                </form>
+            </div>
+          </div>
+        </div>
+{% endblock %}
