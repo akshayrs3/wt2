@@ -18,6 +18,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .forms import UserForm, PaymentPage
 
+import pandas as pd 
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 # Create your views here.
 class UserFormView(TemplateView):
 	form_class = UserForm
@@ -45,7 +48,7 @@ class UserFormView(TemplateView):
 			username = form.cleaned_data['username']
 			password = form.cleaned_data['password']
 
-			print("\n\n\n\n",username, password)
+			
 			user.set_password(password) #set password 
 
 			user.save()
@@ -71,8 +74,17 @@ class PaymentPage(TemplateView):
 
 	#after submit
 	def post(self, request):
-		print()
-		form = self.form_class(data=request.POST)
+		check_in = request.POST.get("check-in", " ")
+		check_out = request.POST.get("check-out", " ")
+		hotel_name = request.session["hotel_name"]
+		
+		#form = self.form_class(data=request.POST)
+		
+		data_dict = {'hotel_name': hotel_name, 'check_in': check_in, 'check_out': check_out}
+		form = self.form_class(data_dict)
+		form.fields['hotel_name'].widget.attrs['readonly'] = True
+		form.fields['check_in'].widget.attrs['readonly'] = True
+		form.fields['check_out'].widget.attrs['readonly'] = True
 
 		return render(request, self.template_name, {'form':form})
 
@@ -108,7 +120,31 @@ class SelectionPage(TemplateView):
 		print("\n\n\n", hotel_name)
 		hotel = Hotel.objects.get(name = hotel_name)
 
-		return render(request, self.template_name, {'hotel': hotel})
+		request.session["hotel_name"] = hotel_name
+
+		sia = SentimentIntensityAnalyzer()
+		reviews = hotel.review.split('||')
+
+		pos = neg = neu = 0
+		n_review = len(reviews) 
+		for review in reviews:
+			score = sia.polarity_scores(review)
+			if(score['compound'] > 0.2):
+				pos += 1
+			elif(score['compound'] <= 0.2 and score['compound'] >= -0.2):
+				neu += 1
+			else:
+				neg += 1
+
+		print("\n\n\n", pos, neu, neg, n_review)
+		pos = int(pos * 100/ n_review)
+		neu = int(neu * 100/ n_review)
+		neg = int(neg * 100/ n_review)
+		review_scores = {'pos': pos, 'neu': neu, 'neg':neg}
+
+
+
+		return render(request, self.template_name, {'hotel': hotel, 'review_scores': review_scores, 'reviews':reviews})
 
 class SearchPage(TemplateView):
 	template_name = 'main_app/search_page.html'

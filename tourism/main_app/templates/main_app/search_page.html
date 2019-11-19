@@ -2,11 +2,20 @@
 {% load static %}
 
 {% block head %}
+<style>
+    body {
+      background-image: url({% static 'main_app/images/hotel_bg.jpg' %});
+      background-size: cover;
+    }
+    .container-fluid{
+      opacity: 0.9;
+    }
+  </style>
 <title>List of Hotels</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
 <link rel="stylesheet" href="{% static 'main_app/index.css' %}">
 <script type="text/javascript">
     function selection_page_link(event){
@@ -33,7 +42,7 @@
 
         <div class="col-sm-12">
 
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="font-size: 13pt">
                 <div class="panel-body">
                     <table class="table">
                         <thead>
