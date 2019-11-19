@@ -15,9 +15,12 @@
         }else{
             hotel_name = event.target.parentNode.children[1].innerHTML;
         }
+        
         var f = document.getElementById("form");
         
         var i = document.getElementById("hotel-name");
+        
+            
         i.setAttribute('value', hotel_name);
         f.submit();
     }
@@ -49,12 +52,11 @@
                                     <img src="{% static 'main_app/images/' %}{{ hotel.image_url }}"
                                          height="100" width="150">
                                 </td>
-                                {% csrf_token %}
                                 <td>{{ hotel.name }}</td>
                                 <td>{{ hotel.city }}</td>
                                 <td>{{ hotel.address }}</td>
                                 <td> <!-- rooms --> </td>
-                            
+                                {% csrf_token %}
                             </tr>
 
                             {% endfor %}

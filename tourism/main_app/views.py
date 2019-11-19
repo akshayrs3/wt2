@@ -11,12 +11,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
 	
-from .models import User, Hotel, Session
+from .models import User, Hotel
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
-from .forms import UserForm
+from .forms import UserForm, PaymentPage
 
 # Create your views here.
 class UserFormView(TemplateView):
@@ -65,6 +65,17 @@ class UserFormView(TemplateView):
 		return render(request, self.template_name, {'form':form})
 
 
+class PaymentPage(TemplateView):
+	form_class = PaymentPage
+	template_name = 'main_app/payment_page.html'
+
+	#after submit
+	def post(self, request):
+		form = PaymentPage(data=request.POST)
+
+		return render(request, self.template_name, {'form':form})
+
+
 
 class Index(TemplateView):
     template_name = 'main_app/index.html'
@@ -85,7 +96,7 @@ class GetCities(APIView):
 		for hotel in hotels.iterator():
 			if search.lower() in hotel.city.lower():
 				cities.add(hotel.city)
-		print(cities)
+		
 		return JsonResponse(list(cities), safe=False)
 
 class SelectionPage(TemplateView):
@@ -93,9 +104,10 @@ class SelectionPage(TemplateView):
 
 	def post(self, request):
 		hotel_name = request.POST.get("hotel-name", " ")
+		print("\n\n\n", hotel_name)
 		hotel = Hotel.objects.get(name = hotel_name)
 
-		return render(request, self.template_name, {'hotel_name': result})
+		return render(request, self.template_name, {'hotel': hotel})
 
 class SearchPage(TemplateView):
 	template_name = 'main_app/search_page.html'
@@ -105,11 +117,10 @@ class SearchPage(TemplateView):
 		check_in = request.POST.get("check-in-date", " ")
 		check_out = request.POST.get("check-out-date", " ")
 
-		# retrieve pk from Session
-		Session.objects.filter(pk = 1).update(check_in = check_in)
-		Session.objects.filter(pk = 1).update(check_out = check_out)
+		# setting session
+		request.session["check_in"] = check_in
+		request.session["check_out"] = check_out
 
-		print(Session.objects.all(), "\n\n\n\n\n\n\n\n")
 		hotels = Hotel.objects.all()
 
 		
@@ -122,7 +133,6 @@ class SearchPage(TemplateView):
 			if city.lower() in hotel.city.lower():
 				results.append(hotels_dict[i])
 
-		print(results)
 
 		return render(request, self.template_name, {'results':results, 
 			'check_in': check_in, 'check_out': check_out})
@@ -144,6 +154,16 @@ class LoginPage(TemplateView):
 
 
 		return render(request, self.template_name)
+
+
+# class PaymentPage(TemplateView):
+# 	template_name = 'main_app/payment_page.html'
+
+# 	def post(self, request):
+		
+
+
+# 		return render(request, self.template_name)	
 
 
 

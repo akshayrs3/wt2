@@ -1,5 +1,5 @@
 {% extends 'main_app/base.html' %}
-
+{% load static %}
 
 {% block head %}
   <meta charset="utf-8">
@@ -18,8 +18,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
   <script>
 	$(function () {
-	  $("#datetimepicker").datetimepicker();
-	  $("#datetimepicker2").datetimepicker();
+	  $("#check-in").datetimepicker();
+	  $("#check-out").datetimepicker();
 	});
   </script>
 
@@ -27,23 +27,33 @@
 
 {% block body %}
 	<div class="container">
+	  <form id="form" action="{% url 'main_app:PaymentPage' %}" method="post" enctype="multipart/form-data">
+		  {% csrf_token %}
 
-	  <div class="row">
-	  	<div class="col-sm-3">
-	      <h2>Hotel Name</h2>
-	      <h3>{{ hotel_name }}</h3>>
-	      <input id="datetimepicker" type="text">
-	    </div>
-	  	<div class="col-sm-3">
-	      <h2>Check In Date</h2>
-	      <input id="datetimepicker" type="text">
-	    </div>
+		  <div class="row">
+		  	<div class="col-sm-3">
+		      <img src="{% static 'main_app/images/' %}{{ hotel.image_url }}" height="200" width="250">
+		    </div>
 
-	    <div class="col-sm-3">
-	      <h2>Check Out Date</h2>
-	      <input id="datetimepicker" type="text">
-	    </div>
-	  </div>
+		  	<div class="col-sm-3">
+		      <h2>Hotel Name</h2>
+		      <h3>{{ hotel.name }}</h3>
+		    </div>
 
+		  	<div class="col-sm-3">
+		      <h2>Check In Date</h2>
+		      <input id="check-in" type="text" value="{{ request.session.check_in }}">
+		    </div>
+
+		    <div class="col-sm-3">
+		      <h2>Check Out Date</h2>
+		      <input id="check-out" type="text" value="{{ request.session.check_out }}">
+		    </div>
+		  </div>
+
+		  <div class="row">
+		      <input id="check-out" type="submit" value="Book Hotel" style="margin-top:20%; margin-left:45%">
+		  </div>
+	</form>
 	</div>
 {% endblock %}
