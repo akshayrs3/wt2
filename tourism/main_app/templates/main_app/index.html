@@ -45,11 +45,16 @@
           var new_div = document.createElement("div");
           new_div.innerHTML = city;
           new_div.onclick = fill_field;
+          new_div.onmouseover = change_color;
           table.appendChild(new_div);
         }
         table.style.display = "block";
       }
     }
+
+    function change_color(){
+      this.bgColor = "blue";
+    }    
 
     function fill_field(e){
       search = document.getElementById("city");
@@ -86,7 +91,7 @@
 
               <div class="form-group">
                 <label class="control-label col-sm-5">Guests</label>
-                <select id="guests" name = "guests"> 
+                <select id="guests" name="guests"> 
                   <option value = "1"> 1 </option>
                   <option value = "2"> 2 </option>
                   <option value = "3"> 3 </option>

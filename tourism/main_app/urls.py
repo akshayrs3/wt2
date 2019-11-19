@@ -11,4 +11,5 @@ urlpatterns = [
     path('selection', views.SelectionPage.as_view(), name = 'SelectionPage'),
     path('register', views.UserFormView.as_view(), name='RegisterPage'),
     path('payment', views.PaymentPage.as_view(), name='PaymentPage'),
+    path('thankyou', views.ThankYouPage.as_view(), name='ThankYouPage'),
 ]

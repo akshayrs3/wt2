@@ -30,6 +30,7 @@ class Hotel(models.Model):
 	endPrice = models.FloatField(default=0.0)
 	image_url = models.CharField(default="empty", max_length=100)
 	review = models.CharField(default="empty", max_length=1000000000)
+	max_rooms_available = models.IntegerField(default = 20)
 
 	def __str__(self):
 		return (self.name + " " +self.city + " " + self.country + " " 

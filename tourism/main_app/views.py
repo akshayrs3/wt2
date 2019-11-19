@@ -77,6 +77,10 @@ class PaymentPage(TemplateView):
 		check_in = request.POST.get("check-in", " ")
 		check_out = request.POST.get("check-out", " ")
 		hotel_name = request.session["hotel_name"]
+
+		#need to this again cuz they might change dates at the selection page
+		request.session["check_in"] = check_in
+		request.session["check_out"] = check_out
 		
 		#form = self.form_class(data=request.POST)
 		
@@ -117,10 +121,11 @@ class SelectionPage(TemplateView):
 
 	def post(self, request):
 		hotel_name = request.POST.get("hotel-name", " ")
-		print("\n\n\n", hotel_name)
+		
 		hotel = Hotel.objects.get(name = hotel_name)
 
 		request.session["hotel_name"] = hotel_name
+
 
 		sia = SentimentIntensityAnalyzer()
 		reviews = hotel.review.split('||')
@@ -153,10 +158,12 @@ class SearchPage(TemplateView):
 		city = request.POST.get("city", " ")
 		check_in = request.POST.get("check-in-date", " ")
 		check_out = request.POST.get("check-out-date", " ")
+		guests = request.POST.get("guests", " ")
 
 		# setting session
 		request.session["check_in"] = check_in
 		request.session["check_out"] = check_out
+		request.session["guests"] = guests
 
 		hotels = Hotel.objects.all()
 
@@ -193,14 +200,29 @@ class LoginPage(TemplateView):
 		return render(request, self.template_name)
 
 
-# class PaymentPage(TemplateView):
-# 	template_name = 'main_app/payment_page.html'
 
-# 	def post(self, request):
-		
+class ThankYouPage(TemplateView):
+	template_name = 'main_app/thankyou_page.html'
+
+	def post(self, request):
+		name = request.POST.get("first_name", " ") + ' ' + request.POST.get("last_name", " ")
+		email = request.POST.get("email", " ")
+		hotel_name = request.POST.get("hotel_name", " ")
+		room_type = request.POST.get("room-type", " ")
+		check_in = request.session["check_in"] 
+		check_out = request.session["check_out"] 
+		guests = request.session["guests"] 
+
+		results = {'name': name, 'email':email, 'hotel_name':hotel_name, 'check_in':check_in, 'check_out':check_out, 
+				   'guests':guests, 'room_type':room_type}
+
+		hotel = Hotel.objects.get(name = hotel_name)
+		hotel.max_rooms_available = hotel.max_rooms_available - 1
+		hotel.save()
 
 
-# 		return render(request, self.template_name)	
+		return render(request, self.template_name, {'results':results})
+
 
 
 
