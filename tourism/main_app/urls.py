@@ -12,4 +12,7 @@ urlpatterns = [
     path('register', views.UserFormView.as_view(), name='RegisterPage'),
     path('payment', views.PaymentPage.as_view(), name='PaymentPage'),
     path('thankyou', views.ThankYouPage.as_view(), name='ThankYouPage'),
+    path('review', views.ReviewPage.as_view(), name='ReviewPage'),
+
+    path('review_api', views.ReviewAPI.as_view(), name='ReviewAPI'),
 ]

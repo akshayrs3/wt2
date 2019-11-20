@@ -28,7 +28,7 @@
         if(timer){
           clearTimeout(timer);
         }
-        timer=setTimeout(send_data,1000)
+        timer=setTimeout(send_data,1)
     }
     function send_data(){
       xhr = new XMLHttpRequest()
@@ -39,29 +39,32 @@
     }
     function show_result(){
       if(this.readyState == 4 && this.status == 200){
-        cities = JSON.parse(this.response)
+        cities = JSON.parse(this.response);
         //table = document.getElementById("container");
         for(city of cities){
           var new_div = document.createElement("div");
           new_div.innerHTML = city;
           new_div.onclick = fill_field;
-          new_div.onmouseover = change_color;
+          new_div.onmouseenter = change_color;
+          new_div.onmouseleave = change_color_back;
           table.appendChild(new_div);
         }
         table.style.display = "block";
       }
-    }
-
-    function change_color(){
-      this.bgColor = "blue";
-    }    
-
+    }  
     function fill_field(e){
       search = document.getElementById("city");
       search.value = e.target.innerHTML;
       table.innerHTML = "";
     }
-
+    function change_color(e){
+      console.log(this)
+      e.target.style.backgroundColor = "rgb(220, 220, 220)";
+    }  
+    function change_color_back(e){
+      console.log(this)
+      e.target.style.backgroundColor = "";
+    }
   </script>
 {% endblock %}
 

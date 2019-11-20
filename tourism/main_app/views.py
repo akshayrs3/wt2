@@ -77,19 +77,20 @@ class PaymentPage(TemplateView):
 		check_in = request.POST.get("check-in", " ")
 		check_out = request.POST.get("check-out", " ")
 		hotel_name = request.session["hotel_name"]
-
+		room_type = request.POST.get("room-type", " ")
+		room_type = room_type[0].upper() + room_type[1:]
 		#need to this again cuz they might change dates at the selection page
 		request.session["check_in"] = check_in
 		request.session["check_out"] = check_out
-		
+		request.session["room_type"] = room_type
 		#form = self.form_class(data=request.POST)
 		
-		data_dict = {'hotel_name': hotel_name, 'check_in': check_in, 'check_out': check_out}
+		data_dict = {'hotel_name': hotel_name, 'check_in': check_in, 'check_out': check_out, 
+		'room_type': room_type}
 		form = self.form_class(data_dict)
 		form.fields['hotel_name'].widget.attrs['readonly'] = True
 		form.fields['check_in'].widget.attrs['readonly'] = True
 		form.fields['check_out'].widget.attrs['readonly'] = True
-
 		return render(request, self.template_name, {'form':form})
 
 
@@ -208,7 +209,8 @@ class ThankYouPage(TemplateView):
 		name = request.POST.get("first_name", " ") + ' ' + request.POST.get("last_name", " ")
 		email = request.POST.get("email", " ")
 		hotel_name = request.POST.get("hotel_name", " ")
-		room_type = request.POST.get("room-type", " ")
+		room_type = request.POST.get("room_type", " ")
+		print("\n\n\n\n", room_type)
 		check_in = request.session["check_in"] 
 		check_out = request.session["check_out"] 
 		guests = request.session["guests"] 
@@ -223,6 +225,23 @@ class ThankYouPage(TemplateView):
 
 		return render(request, self.template_name, {'results':results})
 
+class ReviewPage(TemplateView):
+	template_name = "main_app/review.html"
+
+	def post(self, request):
+		return render(request, self.template_name)
+
+class ReviewAPI(TemplateView):
+	# submission throttling
+	template_name = "main_app/index.html"
+	def post(self, request):
+		review = request.POST.get("review", " ")
+		hotel_name = request.session["hotel_name"]
+		hotel = Hotel.objects.get(name = hotel_name)
+		print("\n\n\n\n", review)
+		hotel.review = hotel.review + "|| " + str(review)
+		hotel.save()
+		return render(request, self.template_name)
 
 
 

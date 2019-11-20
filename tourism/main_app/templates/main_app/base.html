@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}Trivago{% endblock %}</title>
+  <title>{% block title %}Make My Hotel{% endblock %}</title>
   {% load staticfiles %}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
@@ -24,7 +24,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'main_app:Index' %}">Trivago</a>
+        <a class="navbar-brand" href="{% url 'main_app:Index' %}">Make My Hotel</a>
       </div>
 
       <!-- Items -->
@@ -38,11 +38,6 @@
               </a>
             </li>
           {% endif %}
-          <li>
-            <a href="#">
-              <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span >&nbsp;FAQ
-            </a>
-          </li>
           <li>
             <a href="{% url 'main_app:RegisterPage' %}">
               <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; 

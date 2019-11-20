@@ -20,7 +20,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
   <script>
 	function getPrice(){
-		if(document.getElementById("room-type").value == "suite"){
+		if(document.getElementById("room-type").value == "Suite"){
 			result = document.getElementById("suite").innerHTML;
 		} 
 		else{
@@ -62,23 +62,26 @@
 			  	  <div id="suite" style="display:None">{{ hotel.endPrice }}</div>
 			  	  <div id="deluxe" style="display:None">{{ hotel.startPrice }}</div>	
 
-	              <select onclick="getPrice()" id="room-type" name = "room-type"> 
-	                  <option value = "suite"> Suite </option>
-	                  <option value = "deluxe"> Deluxe </option>
+	              <select onchange="getPrice()"  id="room-type" name = "room-type"> 
+	                  <option  value = "Suite"> Suite </option>
+	                  <option  selected value = "Deluxe"> Deluxe </option>
 	              </select>
 	        </div>
 
 	        <div class="col-sm-3">
 		      <h2>Price</h2>
-		      <span id="result"></span>
-		    </div>
-
-			<div class="col-sm-3">
-		      <h2>Guests: {{ request.session.guests }}</h2>
+		      <h4><span id="result">Rs. {{ hotel.startPrice }}</span></h4>
 		    </div>
 
 		  </div>
-
+		  <div class="row">
+		  	<div class="col-sm-3"></div>
+		  	<div class="col-sm-3"></div>
+		  	<div class="col-sm-3"></div>
+		  	<div class="col-sm-3">
+		      <h2>Guests: {{ request.session.guests }}</h2>
+		    </div>
+		  </div>
 
 		  <div class="row">
 		  		<div class="col-sm-3"></div>
@@ -107,8 +110,10 @@
 		      	  <h4>Negative</h4>
 		      	  <h4>{{ review_scores.neg }}%</h4>
 		      </div>
+		      <div class = "col-sm-6">
+		      	<input  id="check-out" type="submit" value="Book Hotel" class="btn btn-success" style="margin-left:70%">
+		      </div>
 		  </div>
-
 		  <div class="row">
 		  	  <div class="col-sm-12">
 			      <h2>Customer Reviews</h2>
@@ -123,10 +128,6 @@
 				      </div>
 				  </div> <br />
 			  {% endfor %}
-		  </div>
-
-		  <div class="row">
-		  	 <input id="check-out" type="submit" value="Book Hotel" style="margin-top:10%; margin-left:45%">
 		  </div>
 	</form>
 	</div>

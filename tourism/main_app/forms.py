@@ -4,7 +4,7 @@ import datetime
 
 class UserForm(forms.ModelForm):
 
-	#password = forms.CharField(widget=forms.PasswordInput) 
+	password = forms.CharField(widget=forms.PasswordInput) 
 
 	class Meta:
 		model = User
@@ -25,6 +25,7 @@ class PaymentPage(forms.Form):
 	check_out = forms.DateField(label="Check-out Date")
 
 	hotel_name = forms.CharField(label="Hotel Name", max_length=100)
+	#room_type = forms.CharField(label = "Room-Type", max_length= 50)
 
 	email = forms.CharField(label="Email ID", max_length=100)
 
