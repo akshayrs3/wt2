@@ -12,6 +12,6 @@ cd wt2/tourism/
 ```
 python3 manage.py runserver
 ```
-3. Use the links in the website to navigate to different pages.
+4. Use the links in the website to navigate to different pages.
 
 
